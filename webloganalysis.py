@@ -3,13 +3,14 @@
 import os,findspark
 os.environ['SPARK_HOME'] = '/home/rohith/work/spark-1.6.1-bin-without-hadoop'
 findspark.init()
-
+import flask
 
 from pyspark import SparkContext, SparkConf
 from pyspark.sql import SQLContext, Row
 import re
 
-
+import sys
+print ("version:",sys.version)
 
 
 APP_NAME = "Logs Spark"
@@ -19,7 +20,7 @@ sc = SparkContext(conf=conf)
 sqlContext = SQLContext(sc)
 
 
-logFiles = sc.textFile("hdfs://localhost:9000/user/rohith/access.log")
+logFiles = sc.textFile("file:/var/log/nginx/access.log")
 NGINX_LOGPATT = '''^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\]  "(\S+) (\S+) (\S+)" (\S+) (\S+) "(\S+)" "(\w+\/\S+ \S+ \S+ \S+ \S+ \S+ \S+)" "(\S+)"'''
 
 def parse_nginx_log(logline):

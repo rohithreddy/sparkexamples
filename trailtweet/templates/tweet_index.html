@@ -1,0 +1,39 @@
+<html>
+<body>
+  <table>
+    <thead>
+      <tr>
+      <td>User id
+      </td>
+      <td>Screen Name</td>
+      <td>Name</td>
+      <td>Text</td>
+      <td>Hastags</td>
+    </tr>
+    </thead>
+    <tbody>
+      {% for doc in cursor %}
+      <tr>
+      <td>{{doc['user']['id']}}</td>
+      <td>{{doc['user']['screen_name']}}</td>
+      <td>{{doc['user']['name']}}</td>
+      <td>{{doc['text']}}</td>
+      {% if doc['entities']['hashtags'].size == "0" %}
+        <td>N/A</td>
+      {% else %}
+      <td>{{doc['entities']['hashtags']}}</td>
+      {% endif %}
+    </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+
+</body>
+<table>
+  <thead>
+    <tr>
+    </tr>
+  </thead>
+</table>
+</html>
