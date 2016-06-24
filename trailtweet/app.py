@@ -8,8 +8,10 @@ tweets = db.tweets
 
 
 
-
-
+#import boto3
+#dynamodb = boto3.resource('dynamodb')
+#table = dynamodb.Table('tweetsf')
+#print(table.creation_date_time)
 
 consumer_key = "dVvU9OAtEMESNBRmqrHDHZY8x"
 consumer_secret = "M01fR3LJhFCuqtoYBCdHyQ3vtldpFqCBQVN2ftiol5mgB99m77"
@@ -33,7 +35,8 @@ class MyStreamListener(tweepy.StreamListener):
 
     def on_data(self, data):
         decoded = json.loads(data)
-        tweets.insert_one(decoded)
+	tweets.insert(decoded)
+        #table.put_item(Item=decoded)
         print('@%s: %s' % (decoded['user']['screen_name'], decoded['text'].encode('ascii', 'ignore')))
         return True
 
@@ -42,6 +45,6 @@ myStreamListener = MyStreamListener()
 myStream = tweepy.Stream(auth=api.auth,listener = myStreamListener)
 
 try :
-    myStream.filter(track = ['CustomerCentria','CoolNHot','xxyyzzccbb'])
+    myStream.filter(track = ['bangalore','spark','blackhole','Nuclear','IOT','freelance'])
 except Exception as e:
     print("Exception" , type(e) , e)
